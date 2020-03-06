@@ -33,6 +33,8 @@ the start option to your Tablet/iPad device emulator/simulator.
 3. Right-click on the solution at the very top of the Solution Explorer and click "Set StartUp Projects...", choose "Multiple startup projects" 
 and change "None" to "Start" for "Sliders.API" and "Sliders.Forms.Droid" (PC) or "Sliders.Forms.iOS" (MAC). You should end up with 
 only two projects of the solution set to "Start" the rest of them have to be set to "None". Click "Apply" and then "OK" button.
+4. Open "Sliders.API" -> "Startup.cs" and check if the MariaDB version stated there is the same as the one installed on your computer during 
+the XAMPP installation if it is not, then you should indicate the MariaDB version that is installed on your machine.
 
 ### XAMPP set up
 1. Run XAMPP and ensure that both Apache and MySQL are up and running.
