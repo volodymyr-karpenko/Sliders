@@ -9,7 +9,6 @@ namespace Sliders.Core.Services
     {
         private readonly IDataService<SlidersData> _dataService;
         private readonly Timer _timer;
-        private bool _isRunning;        
 
         public GenerateDataService(IDataService<SlidersData> dataService)
         {
@@ -17,7 +16,7 @@ namespace Sliders.Core.Services
             _timer = new Timer(GenerateData);
         }
 
-        public bool IsRunning => _isRunning;
+        public bool IsRunning { get; private set; }
 
         private async void GenerateData(object state)
         {
@@ -47,13 +46,13 @@ namespace Sliders.Core.Services
         public void Start()
         {
             _timer.Change(0, 1000);
-            _isRunning = true;
+            IsRunning = true;
         }
 
         public void Stop()
         {
             _timer.Change(Timeout.Infinite, Timeout.Infinite);
-            _isRunning = false;
+            IsRunning = false;
         }
     }
 }

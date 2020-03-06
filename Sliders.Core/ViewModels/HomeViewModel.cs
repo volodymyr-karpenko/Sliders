@@ -84,22 +84,26 @@ namespace Sliders.Core.ViewModels
             set => SetProperty(ref _isDeleteAllButtonVisible, value);
         }
 
-        public IMvxCommand StartSessionCommand => new MvxCommand(StartSession, () => !IsBusy);
+        public IMvxAsyncCommand StartSessionCommand => new MvxAsyncCommand(StartSessionAsync, () => !IsBusy);
         public IMvxAsyncCommand StopSessionCommand => new MvxAsyncCommand(StopSessionAsync);
         public IMvxAsyncCommand DeleteAllDataCommand => new MvxAsyncCommand(DeleteAllDataAsync, () => !_generateDataService.IsRunning);
         public IMvxCommand QuestionCommand => new MvxCommand(ShowDialogue);
 
-        private void StartSession()
+        private async Task StartSessionAsync()
         {
             IsBusy = true;
             IsStopSessionVisible = true;
             _generateDataService.Start();
-            _token = _messenger.SubscribeOnMainThread((ReadDataMessage msg) => ReadDataAsync());
+            _token = _messenger.SubscribeOnMainThread(async (ReadDataMessage msg) => await ReadDataAsync());
 
-            ReadDataAsync();
+            await ReadDataAsync();
+
+            IsBusy = false;
+            IsDeleteAllButtonVisible = false;
+            IsTimestampVisible = true;
         }
 
-        private async void ReadDataAsync()
+        private async Task ReadDataAsync()
         {
             SlidersData item = null;
 
@@ -114,24 +118,17 @@ namespace Sliders.Core.ViewModels
 
             if (item == null || item.Id == CurrentData.Id)
             {
-                Task task = Task.Factory.StartNew(() =>
+                Task task = Task.Factory.StartNew(async () =>
                 {
                     Thread.Sleep(1000);
-                    ReadDataAsync();
+                    await ReadDataAsync();
                 });
 
                 return;
             }
 
             CurrentData = item;
-            _messenger.Publish(new SlidersDataMessage(this, item));
-
-            if (!IsTimestampVisible)
-            {
-                IsBusy = IsTimestampVisible;
-                IsDeleteAllButtonVisible = IsTimestampVisible;
-                IsTimestampVisible = true;
-            }
+            _messenger.Publish(new SlidersDataMessage(this, item));            
         }
 
         private async Task StopSessionAsync()

@@ -4,6 +4,7 @@ using MvvmCross.Tests;
 using Sliders.Core.Models;
 using Sliders.Core.Services;
 using Sliders.Core.ViewModels;
+using System.Reflection;
 using Xunit;
 
 namespace Sliders.Tests.ViewModels
@@ -27,19 +28,81 @@ namespace Sliders.Tests.ViewModels
         }
 
         [Fact]
-        public void IsBusyEqualsTrueOnStartSessionCommand()
+        public void IsBusyFalseAfterStartSessionCommand()
         {
             HomeViewModel vm = Ioc.IoCConstruct<HomeViewModel>();
             vm.StartSessionCommand.Execute();
-            Assert.True(vm.IsBusy);
+            Assert.False(vm.IsBusy);
         }
 
         [Fact]
-        public void IsStopSessionVisibleEqualsTrueOnStartSessionCommand()
+        public void IsStopSessionVisibleTrueAfterStartSessionCommand()
         {
             HomeViewModel vm = Ioc.IoCConstruct<HomeViewModel>();
             vm.StartSessionCommand.Execute();
             Assert.True(vm.IsStopSessionVisible);
+        }
+
+        [Fact]
+        public void IsTimestampVisibleTrueAfterReadDataAsync()
+        {
+            HomeViewModel vm = Ioc.IoCConstruct<HomeViewModel>();
+            vm.StartSessionCommand.Execute();
+            Assert.True(vm.IsTimestampVisible);
+        }
+
+        [Fact]
+        public void GeneratorNotNullAfterStartSessionCommand()
+        {
+            HomeViewModel vm = Ioc.IoCConstruct<HomeViewModel>();
+            vm.StartSessionCommand.Execute();
+            FieldInfo _generateDataService = vm.GetType().GetField("_generateDataService", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.NotNull(_generateDataService.GetValue(vm));
+        }
+
+        [Fact]
+        public void IsStopSessionVisibleFalseAfterStopSessionCommand()
+        {
+            HomeViewModel vm = Ioc.IoCConstruct<HomeViewModel>();
+            vm.StopSessionCommand.Execute();
+            Assert.False(vm.IsStopSessionVisible);
+        }
+
+        [Fact]
+        public void IsTimestampVisibleFalseAfterStopSessionCommand()
+        {
+            HomeViewModel vm = Ioc.IoCConstruct<HomeViewModel>();
+            vm.StopSessionCommand.Execute();
+            Assert.False(vm.IsTimestampVisible);
+        }
+
+        [Fact]
+        public void GeneratorNotNullAfterStopSessionCommand()
+        {
+            HomeViewModel vm = Ioc.IoCConstruct<HomeViewModel>();
+            vm.StopSessionCommand.Execute();
+            FieldInfo _generateDataService = vm.GetType().GetField("_generateDataService", BindingFlags.Instance | BindingFlags.NonPublic);
+            Assert.NotNull(_generateDataService.GetValue(vm));
+        }
+
+        [Fact]
+        public void QuestionMarkIconTappedQuestionCommand()
+        {
+            HomeViewModel vm = Ioc.IoCConstruct<HomeViewModel>();
+            vm.HelpIconSrc = "\uf059";
+            vm.QuestionCommand.Execute();
+            Assert.Equal("\uf00d", vm.HelpIconSrc);
+            Assert.True(vm.IsAppDescriptionVisible);
+        }
+
+        [Fact]
+        public void CloseIconTappedQuestionCommand()
+        {
+            HomeViewModel vm = Ioc.IoCConstruct<HomeViewModel>();
+            vm.HelpIconSrc = "\uf00d";
+            vm.QuestionCommand.Execute();
+            Assert.Equal("\uf059", vm.HelpIconSrc);
+            Assert.False(vm.IsAppDescriptionVisible);
         }
     }
 }
