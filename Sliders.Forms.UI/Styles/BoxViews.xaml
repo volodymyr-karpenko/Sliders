@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    x:Class="Sliders.Forms.UI.Styles.BoxViews"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--  BoxView Styles  -->
+
+    <Style x:Key="TopBoxViewStyle" TargetType="BoxView">
+        <Setter Property="BackgroundColor" Value="{StaticResource BackgroundSecondaryColor}" />
+    </Style>
+
+    <Style x:Key="SliderBoxViewStyle" TargetType="BoxView">
+        <Setter Property="HeightRequest" Value="400" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryTextColor}" />
+    </Style>
+</ResourceDictionary>

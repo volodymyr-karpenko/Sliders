@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    x:Class="Sliders.Forms.UI.Styles.Colors"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--  Colors  -->
+
+    <Color x:Key="PrimaryTextColor">#FFFFFF</Color>
+    <Color x:Key="DarkAccentColor">#5e6ce6</Color>
+    <Color x:Key="DarkPrimaryColor">#3b5998</Color>
+    <Color x:Key="BackgroundPrimaryColor">#131231</Color>
+    <Color x:Key="BackgroundSecondaryColor">#8b9dc3</Color>
+</ResourceDictionary>

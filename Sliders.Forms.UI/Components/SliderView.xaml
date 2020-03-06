@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView
+    x:Class="Sliders.Forms.UI.Components.SliderView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <ContentView.Content>
+        <Grid HeightRequest="440" WidthRequest="60">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="400" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="4" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label
+                x:Name="IndicatorLabel"
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Style="{StaticResource DataValueLabelStyle}" />
+
+            <BoxView
+                Grid.Row="1"
+                Grid.Column="1"
+                Style="{StaticResource SliderBoxViewStyle}" />
+
+            <StackLayout
+                Grid.Row="1"
+                Grid.Column="0"
+                Spacing="0">
+                <Label Style="{StaticResource MaxLeftLabelStyle}" Text="200" />
+                <Label Style="{StaticResource ZeroLeftLabelStyle}" Text="-" />
+                <Label Style="{StaticResource MinLeftLabelStyle}" Text="-200" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="1"
+                Grid.Column="2"
+                Spacing="0">
+                <Label Style="{StaticResource MaxRightLabelStyle}" Text="200" />
+                <Label Style="{StaticResource ZeroRightLabelStyle}" Text="-" />
+                <Label Style="{StaticResource MinRightLabelStyle}" Text="-200" />
+            </StackLayout>
+
+            <Label
+                x:Name="SliderIcon"
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Style="{StaticResource SliderLabelStyle}" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

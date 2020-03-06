@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    x:Class="Sliders.Forms.UI.Styles.Labels"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--  Label Styles  -->
+
+    <Style x:Key="TitleLabelStyle" TargetType="Label">
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="FontFamily" Value="{StaticResource CantarellBoldFont}" />
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+        <Setter Property="LineBreakMode" Value="NoWrap" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="IconLabelStyle" TargetType="Label">
+        <Setter Property="FontAttributes" Value="None" />
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesome}" />
+        <Setter Property="FontSize" Value="40" />
+        <Setter Property="WidthRequest" Value="50" />
+        <Setter Property="HeightRequest" Value="50" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style
+        x:Key="SliderLabelStyle"
+        BasedOn="{StaticResource IconLabelStyle}"
+        TargetType="Label">
+        <Setter Property="Text" Value="&#xf068;" />
+    </Style>
+
+    <Style
+        x:Key="DataValueLabelStyle"
+        BasedOn="{StaticResource TitleLabelStyle}"
+        TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style
+        x:Key="MaxLeftLabelStyle"
+        BasedOn="{StaticResource TitleLabelStyle}"
+        TargetType="Label">
+        <Setter Property="FontSize" Value="8" />
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="HorizontalTextAlignment" Value="End" />
+        <Setter Property="VerticalOptions" Value="Start" />
+        <Setter Property="VerticalTextAlignment" Value="Start" />
+    </Style>
+
+    <Style
+        x:Key="ZeroLeftLabelStyle"
+        BasedOn="{StaticResource MaxLeftLabelStyle}"
+        TargetType="Label">
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style
+        x:Key="MinLeftLabelStyle"
+        BasedOn="{StaticResource MaxLeftLabelStyle}"
+        TargetType="Label">
+        <Setter Property="VerticalOptions" Value="End" />
+        <Setter Property="VerticalTextAlignment" Value="End" />
+    </Style>
+
+    <Style
+        x:Key="MaxRightLabelStyle"
+        BasedOn="{StaticResource MaxLeftLabelStyle}"
+        TargetType="Label">
+        <Setter Property="HorizontalOptions" Value="Start" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+    </Style>
+
+    <Style
+        x:Key="ZeroRightLabelStyle"
+        BasedOn="{StaticResource MaxRightLabelStyle}"
+        TargetType="Label">
+        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+    </Style>
+
+    <Style
+        x:Key="MinRightLabelStyle"
+        BasedOn="{StaticResource MaxRightLabelStyle}"
+        TargetType="Label">
+        <Setter Property="VerticalOptions" Value="End" />
+        <Setter Property="VerticalTextAlignment" Value="End" />
+    </Style>
+</ResourceDictionary>

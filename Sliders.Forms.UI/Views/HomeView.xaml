@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvxViews:MvxContentPage
+    x:Class="Sliders.Forms.UI.Views.HomeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:Sliders.Forms.UI.Behaviors;assembly=Sliders.Forms.UI"
+    xmlns:components="clr-namespace:Sliders.Forms.UI.Components;assembly=Sliders.Forms.UI"
+    xmlns:mvx="clr-namespace:MvvmCross.Forms.Bindings;assembly=MvvmCross.Forms"
+    xmlns:mvxViews="clr-namespace:MvvmCross.Forms.Views;assembly=MvvmCross.Forms"
+    xmlns:viewModels="clr-namespace:Sliders.Core.ViewModels;assembly=Sliders.Core"
+    x:TypeArguments="viewModels:HomeViewModel"
+    BackgroundColor="{StaticResource DarkPrimaryColor}">
+
+    <mvxViews:MvxContentPage.Content>
+        <Grid ColumnSpacing="0" RowSpacing="0">
+            <Grid.Margin>
+                <OnPlatform
+                    x:TypeArguments="Thickness"
+                    Android="0,0,0,0"
+                    iOS="0,20,0,0" />
+            </Grid.Margin>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <BoxView
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Style="{StaticResource TopBoxViewStyle}" />
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                mvx:Bi.nd="Text HelpIconSrc"
+                Style="{StaticResource IconLabelStyle}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer mvx:Bi.nd="Command QuestionCommand" />
+                </Label.GestureRecognizers>
+                <Label.Behaviors>
+                    <behaviors:ViewBounceBehavior />
+                </Label.Behaviors>
+            </Label>
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="40,0,0,0"
+                mvx:Bi.nd="IsVisible IsTimestampVisible; Text Format('Measurement time (UTC): {0:HH:mm:ss}', CurrentData.Time)"
+                FontSize="14"
+                Style="{StaticResource TitleLabelStyle}" />
+
+            <StackLayout
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="40,0,0,0"
+                Orientation="Horizontal"
+                Spacing="10">
+
+                <Label
+                    mvx:Bi.nd="IsVisible IsTimestampVisible, Converter=InvertedBool; Text Format('Total measurements: {0} ', TotalDataItems)"
+                    FontSize="14"
+                    Style="{StaticResource TitleLabelStyle}" />
+
+                <Label
+                    mvx:Bi.nd="IsVisible IsDeleteAllButtonVisible"
+                    FontSize="26"
+                    HeightRequest="40"
+                    Style="{StaticResource IconLabelStyle}"
+                    Text="&#xf2ed;"
+                    WidthRequest="40">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer mvx:Bi.nd="Command DeleteAllDataCommand" />
+                    </Label.GestureRecognizers>
+                    <Label.Behaviors>
+                        <behaviors:ViewBounceBehavior />
+                    </Label.Behaviors>
+                </Label>
+            </StackLayout>
+
+            <Grid
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="0,0,10,0"
+                HorizontalOptions="EndAndExpand">
+
+                <Label
+                    x:Name="StartSessionLabel"
+                    mvx:Bi.nd="IsVisible IsStopSessionVisible, Converter=InvertedBool"
+                    FontSize="28"
+                    HorizontalOptions="End"
+                    HorizontalTextAlignment="End"
+                    Style="{StaticResource TitleLabelStyle}"
+                    Text="START SESSION">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer mvx:Bi.nd="Command StartSessionCommand" />
+                    </Label.GestureRecognizers>
+                    <Label.Behaviors>
+                        <behaviors:ViewBounceBehavior />
+                    </Label.Behaviors>
+                </Label>
+
+                <Label
+                    x:Name="StopSessionLabel"
+                    mvx:Bi.nd="IsVisible IsStopSessionVisible"
+                    FontSize="28"
+                    HorizontalOptions="End"
+                    HorizontalTextAlignment="End"
+                    Style="{StaticResource TitleLabelStyle}"
+                    Text="STOP SESSION">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer mvx:Bi.nd="Command StopSessionCommand" />
+                    </Label.GestureRecognizers>
+                    <Label.Behaviors>
+                        <behaviors:ViewBounceBehavior />
+                    </Label.Behaviors>
+                </Label>
+            </Grid>
+
+            <FlexLayout
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                AlignItems="Center"
+                BackgroundColor="{StaticResource BackgroundPrimaryColor}"
+                Direction="Row"
+                HorizontalOptions="FillAndExpand"
+                JustifyContent="SpaceEvenly"
+                VerticalOptions="FillAndExpand"
+                Wrap="NoWrap">
+
+                <components:SliderView x:Name="SliderView1" />
+                <components:SliderView x:Name="SliderView2" />
+                <components:SliderView x:Name="SliderView3" />
+                <components:SliderView x:Name="SliderView4" />
+                <components:SliderView x:Name="SliderView5" />
+            </FlexLayout>
+
+            <BoxView
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                mvx:Bi.nd="IsVisible IsAppDescriptionVisible"
+                BackgroundColor="{StaticResource BackgroundPrimaryColor}"
+                Opacity="0.95">
+                <BoxView.Behaviors>
+                    <behaviors:FadeInBehavior />
+                </BoxView.Behaviors>
+            </BoxView>
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="100,0"
+                mvx:Bi.nd="IsVisible IsAppDescriptionVisible; Text AppDescription"
+                BackgroundColor="Transparent"
+                FontSize="16"
+                HorizontalOptions="CenterAndExpand"
+                LineBreakMode="TailTruncation"
+                MaxLines="30"
+                Opacity="1"
+                Style="{StaticResource TitleLabelStyle}">
+                <Label.Behaviors>
+                    <behaviors:FadeInBehavior />
+                </Label.Behaviors>
+            </Label>
+
+            <ActivityIndicator
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="0,20,0,0"
+                mvx:Bi.nd="IsVisible IsBusy"
+                BackgroundColor="Transparent"
+                HorizontalOptions="CenterAndExpand"
+                IsRunning="True"
+                VerticalOptions="Start"
+                Color="{StaticResource DarkAccentColor}" />
+        </Grid>
+    </mvxViews:MvxContentPage.Content>
+    <mvxViews:MvxContentPage.Behaviors>
+        <behaviors:SlidersDataPresentBehavior />
+    </mvxViews:MvxContentPage.Behaviors>
+</mvxViews:MvxContentPage>
