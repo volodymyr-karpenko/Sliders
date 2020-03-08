@@ -2,7 +2,6 @@
 using MvvmCross.Forms.Views;
 using Sliders.Core.ViewModels;
 using Sliders.Forms.UI.Components;
-using Sliders.Forms.UI.Interfaces;
 
 namespace Sliders.Forms.UI.Views
 {

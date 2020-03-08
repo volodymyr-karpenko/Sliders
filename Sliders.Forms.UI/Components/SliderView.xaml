@@ -21,7 +21,8 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="3"
-                Style="{StaticResource DataValueLabelStyle}" />
+                Style="{StaticResource DataValueLabelStyle}"
+                Text="0" />
 
             <BoxView
                 Grid.Row="1"

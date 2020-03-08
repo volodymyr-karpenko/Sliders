@@ -1,7 +1,7 @@
 ﻿using MvvmCross;
 using MvvmCross.Plugin.Messenger;
 using Sliders.Core.Models;
-using Sliders.Forms.UI.Interfaces;
+using Sliders.Forms.UI.Views;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -37,7 +37,7 @@ namespace Sliders.Forms.UI.Behaviors
 
         private void PresentData(SlidersDataMessage args)
         {
-            if (args == null || _messenger == null)
+            if (_messenger == null)
             {
                 return;
             }
@@ -48,9 +48,8 @@ namespace Sliders.Forms.UI.Behaviors
             });
         }
 
-        private async Task PresentDataAsync(SlidersData args)
+        private async Task PresentDataAsync(SlidersData data)
         {
-            var data = args as SlidersData;
             if (data == null || _sliderViews == null)
             {
                 return;

@@ -1,6 +1,6 @@
 ﻿namespace Sliders.Core.Constants
 {
-    public struct AppConstants
+    public static class AppConstants
     {
         public const string appDescription = "This is a sample cross-platform app for Android Tablet/iOS iPad that is built with ASP.NET Core API, " + 
             "Xamarin and MvvmCross. " + "\r\n\r\n" +
@@ -16,5 +16,7 @@
             "and write this data to a database and read it afterward. When the \"STOP SESSION\" is tapped, the app stops generating, writing and reading " +
             "the data. When the \"Trash\" icon is tapped, the app deletes all of the entries in a database to prevent storing randomly generated data on your computer. " + 
             "In case you want to see the data in a database you need to go to your phpMyAdmin, open the \"slidersdb\" database, open the \"slidersdata\" table and refresh your browser.";
+
+        public const string defaultDataId = "default";
     }
 }

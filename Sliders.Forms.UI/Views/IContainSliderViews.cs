@@ -1,6 +1,6 @@
 ﻿using Sliders.Forms.UI.Components;
 
-namespace Sliders.Forms.UI.Interfaces
+namespace Sliders.Forms.UI.Views
 {
     public interface IContainSliderViews
     {

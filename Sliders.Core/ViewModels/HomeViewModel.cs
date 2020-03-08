@@ -1,12 +1,12 @@
 ﻿using MvvmCross.Commands;
 using MvvmCross.Plugin.Messenger;
 using MvvmCross.ViewModels;
+using Sliders.Core.Constants;
 using Sliders.Core.Models;
 using Sliders.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Sliders.Core.ViewModels
@@ -26,7 +26,7 @@ namespace Sliders.Core.ViewModels
             Task.Run(() => CountTotalDataItemsAsync());
         }
 
-        public string AppDescription => Constants.AppConstants.appDescription;
+        public string AppDescription => AppConstants.appDescription;
 
         private bool _isBusy = false;
         public bool IsBusy
@@ -54,7 +54,7 @@ namespace Sliders.Core.ViewModels
         {
             get => _isAppDescriptionVisible;
             set => SetProperty(ref _isAppDescriptionVisible, value);
-        }        
+        }
 
         private SlidersData _currentData = new SlidersData();
         public SlidersData CurrentData
@@ -84,23 +84,25 @@ namespace Sliders.Core.ViewModels
             set => SetProperty(ref _isDeleteAllButtonVisible, value);
         }
 
-        public IMvxAsyncCommand StartSessionCommand => new MvxAsyncCommand(StartSessionAsync, () => !IsBusy);
-        public IMvxAsyncCommand StopSessionCommand => new MvxAsyncCommand(StopSessionAsync);
-        public IMvxAsyncCommand DeleteAllDataCommand => new MvxAsyncCommand(DeleteAllDataAsync, () => !_generateDataService.IsRunning);
+        public IMvxCommand StartSessionCommand => new MvxCommand(StartSession, () => !IsBusy);
+        public IMvxCommand StopSessionCommand => new MvxCommand(StopSession, () => !IsBusy);
+        public IMvxCommand DeleteAllDataCommand => new MvxCommand(DeleteAllData, () => !IsBusy);
         public IMvxCommand QuestionCommand => new MvxCommand(ShowDialogue);
 
-        private async Task StartSessionAsync()
+        private async void StartSession()
         {
             IsBusy = true;
             IsStopSessionVisible = true;
             _generateDataService.Start();
             _token = _messenger.SubscribeOnMainThread(async (ReadDataMessage msg) => await ReadDataAsync());
 
-            await ReadDataAsync();
-
-            IsBusy = false;
-            IsDeleteAllButtonVisible = false;
-            IsTimestampVisible = true;
+            Task task = ReadDataAsync();
+            await task.ContinueWith(t => 
+            {
+                IsBusy = false;
+                IsDeleteAllButtonVisible = false;
+                IsTimestampVisible = true;
+            });            
         }
 
         private async Task ReadDataAsync()
@@ -116,22 +118,11 @@ namespace Sliders.Core.ViewModels
                 Debug.WriteLine(ex);
             }
 
-            if (item == null || item.Id == CurrentData.Id)
-            {
-                Task task = Task.Factory.StartNew(async () =>
-                {
-                    Thread.Sleep(1000);
-                    await ReadDataAsync();
-                });
-
-                return;
-            }
-
             CurrentData = item;
-            _messenger.Publish(new SlidersDataMessage(this, item));            
+            _messenger.Publish(new SlidersDataMessage(this, item));
         }
 
-        private async Task StopSessionAsync()
+        private async void StopSession()
         {
             _generateDataService.Stop();
             IsBusy = true;
@@ -143,21 +134,30 @@ namespace Sliders.Core.ViewModels
                 _token.Dispose();
             }
 
-            _messenger.Publish(new SlidersDataMessage(this, new SlidersData
+            Task<IEnumerable<SlidersData>> task = CountTotalDataItemsAsync();
+            await task.ContinueWith(t => 
             {
-                Id = "stop",
-                Time = DateTime.UtcNow,
-                Slider1 = 0,
-                Slider2 = 0,
-                Slider3 = 0,
-                Slider4 = 0,
-                Slider5 = 0
-            }));
+                List<SlidersData> items = t.Result as List<SlidersData>;
+                TotalDataItems = items != null ? items.Count.ToString() : "0";
+                IsDeleteAllButtonVisible = TotalDataItems != "0" && !IsTimestampVisible;
+                IsBusy = false;
 
-            await CountTotalDataItemsAsync();
+                CurrentData = new SlidersData
+                {
+                    Id = AppConstants.defaultDataId,
+                    Time = DateTime.UtcNow,
+                    Slider1 = 0,
+                    Slider2 = 0,
+                    Slider3 = 0,
+                    Slider4 = 0,
+                    Slider5 = 0
+                };
+
+                _messenger.Publish(new SlidersDataMessage(this, CurrentData));
+            });                        
         }
 
-        private async Task CountTotalDataItemsAsync()
+        private async Task<IEnumerable<SlidersData>> CountTotalDataItemsAsync()
         {
             IEnumerable<SlidersData> data = null;
 
@@ -170,20 +170,24 @@ namespace Sliders.Core.ViewModels
                 Debug.WriteLine(ex.Message);
             }
 
-            List<SlidersData> items = data as List<SlidersData>;
-            TotalDataItems = items != null ? items.Count.ToString() : "0";
-            IsDeleteAllButtonVisible = TotalDataItems != "0" && !IsTimestampVisible;
-            IsBusy = false;
+            return data;            
         }
 
-        private async Task DeleteAllDataAsync()
+        private async void DeleteAllData()
         {
             IsBusy = true;
 
             try
             {
-                Task<bool> task = _dataService.DeleteAllDataAsync();
-                await task.ContinueWith(t => CountTotalDataItemsAsync());
+                await _dataService.DeleteAllDataAsync();
+                Task<IEnumerable<SlidersData>> task = CountTotalDataItemsAsync();
+                await task.ContinueWith(t => 
+                {
+                    List<SlidersData> items = t.Result as List<SlidersData>;
+                    TotalDataItems = items != null ? items.Count.ToString() : "0";
+                    IsDeleteAllButtonVisible = TotalDataItems != "0" && !IsTimestampVisible;
+                    IsBusy = false;
+                });
             }
             catch (Exception ex)
             {

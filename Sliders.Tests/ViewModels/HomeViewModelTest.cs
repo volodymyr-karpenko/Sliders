@@ -28,11 +28,11 @@ namespace Sliders.Tests.ViewModels
         }
 
         [Fact]
-        public void IsBusyFalseAfterStartSessionCommand()
+        public void IsBusyTrueAfterStartSessionCommand()
         {
             HomeViewModel vm = Ioc.IoCConstruct<HomeViewModel>();
             vm.StartSessionCommand.Execute();
-            Assert.False(vm.IsBusy);
+            Assert.True(vm.IsBusy);
         }
 
         [Fact]
