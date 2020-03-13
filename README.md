@@ -50,4 +50,4 @@ during startup for testing purposes, it should look something like this:
 
 On your mobile device emulator, at the top of the screen, you should see "Total measurements: 1".
 
-![Android emulator screenshot](img_screenshot.png)
+![Android emulator screenshot](screenshot.png)
