@@ -1,6 +1,8 @@
 # Sliders
 Sample cross-platform app for Android Tablet/iOS iPad that is built with ASP.NET Core API, Xamarin and MvvmCross
 
+[Android emulator screenshon](img_screenshot.png)
+
 ### IDEA: 
 Let's assume that you have an IoT device that measures some environment once per second. To give you a better 
 understanding of the environment's state at a certain point in time, each measurement consists of five markers presented as sliders. 

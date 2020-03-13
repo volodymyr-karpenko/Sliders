@@ -23,7 +23,15 @@ namespace Sliders.Core.ViewModels
             _generateDataService = generateDataService;
             _dataService = dataService;
             _messenger = messenger;
-            Task.Run(() => CountTotalDataItemsAsync());
+            IsBusy = true;
+            Task<IEnumerable<SlidersData>> task = CountTotalDataItemsAsync();
+            task.ContinueWith(t =>
+            {
+                List<SlidersData> items = t.Result as List<SlidersData>;
+                TotalDataItems = items != null ? items.Count.ToString() : "0";
+                IsDeleteAllButtonVisible = TotalDataItems != "0" && !IsTimestampVisible;
+                IsBusy = false;
+            });
         }
 
         public string AppDescription => AppConstants.appDescription;
