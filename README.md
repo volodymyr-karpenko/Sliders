@@ -1,8 +1,6 @@
 # Sliders
 Sample cross-platform app for Android Tablet/iOS iPad that is built with ASP.NET Core API, Xamarin and MvvmCross
 
-[Android emulator screenshon](img_screenshot.png)
-
 ### IDEA: 
 Let's assume that you have an IoT device that measures some environment once per second. To give you a better 
 understanding of the environment's state at a certain point in time, each measurement consists of five markers presented as sliders. 
@@ -51,3 +49,5 @@ during startup for testing purposes, it should look something like this:
 {"id":"test","time":"2020-03-06T13:30:39.884042","slider1":-100,"slider2":-50,"slider3":0,"slider4":50,"slider5":100}
 
 On your mobile device emulator, at the top of the screen, you should see "Total measurements: 1".
+
+[Android emulator screenshot](screenshots/img_screenshot.png)

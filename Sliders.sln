@@ -17,9 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sliders.Tests", "Sliders.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{58DDA419-1CBF-4DA8-A9B5-F069D27C18AE}"
 	ProjectSection(SolutionItems) = preProject
-		..\img_screenshot.png = ..\img_screenshot.png
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "screenshots", "screenshots", "{30DF0F39-DB46-4977-93DC-A2AE5C5B743E}"
+	ProjectSection(SolutionItems) = preProject
+		..\img_screenshot.png = ..\img_screenshot.png
 	EndProjectSection
 EndProject
 Global
