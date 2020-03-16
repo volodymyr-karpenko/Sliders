@@ -22,16 +22,7 @@ namespace Sliders.Core.ViewModels
         {
             _generateDataService = generateDataService;
             _dataService = dataService;
-            _messenger = messenger;
-            IsBusy = true;
-            Task<IEnumerable<SlidersData>> task = CountTotalDataItemsAsync();
-            task.ContinueWith(t =>
-            {
-                List<SlidersData> items = t.Result as List<SlidersData>;
-                TotalDataItems = items != null ? items.Count.ToString() : "0";
-                IsDeleteAllButtonVisible = TotalDataItems != "0" && !IsTimestampVisible;
-                IsBusy = false;
-            });
+            _messenger = messenger;            
         }
 
         public string AppDescription => AppConstants.appDescription;
@@ -215,6 +206,21 @@ namespace Sliders.Core.ViewModels
                 HelpIconSrc = "\uf059";
                 IsAppDescriptionVisible = false;
             }
+        }
+
+        public override void ViewAppearing()
+        {
+            base.ViewAppearing();
+
+            IsBusy = true;
+            Task<IEnumerable<SlidersData>> task = CountTotalDataItemsAsync();
+            task.ContinueWith(t =>
+            {
+                List<SlidersData> items = t.Result as List<SlidersData>;
+                TotalDataItems = items != null ? items.Count.ToString() : "0";
+                IsDeleteAllButtonVisible = TotalDataItems != "0" && !IsTimestampVisible;
+                IsBusy = false;
+            });
         }
     }
 }
