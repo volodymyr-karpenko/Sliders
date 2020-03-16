@@ -39,9 +39,11 @@
 		<string>Cantarell-Bold.ttf</string>
 		<string>fa-solid-900.ttf</string>
 	</array>
-  <key>UIStatusBarStyle</key>
-  <string>UIStatusBarStyleLightContent</string>
-  <key>UIViewControllerBasedStatusBarAppearance</key>
-  <false/>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>CFBundleName</key>
+	<string>Sliders.Forms.iOS</string>
 </dict>
 </plist>
