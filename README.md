@@ -1,5 +1,5 @@
 # Sliders
-Sample cross-platform app for Android Tablet/iOS iPad that is built with ASP.NET Core API, Xamarin and MvvmCross
+Sample cross-platform app for Android Tablet/iOS iPad that is built with ASP.NET Core API, Xamarin, and MvvmCross.
 
 ### IDEA: 
 Let's assume that you have an IoT device that measures some environment once per second. To give you a better 
